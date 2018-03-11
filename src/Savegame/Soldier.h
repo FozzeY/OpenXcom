@@ -50,7 +50,7 @@ class Soldier
 private:
 	std::wstring _name;
 	int _id, _improvement, _psiStrImprovement;
-    std::string _nationality;
+	std::string _nationality;
 	RuleSoldier *_rules;
 	UnitStats _initialStats, _currentStats;
 	SoldierRank _rank;

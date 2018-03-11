@@ -44,20 +44,20 @@ private:
 	Soldier *_soldier;
 	std::vector<Soldier*> *_list;
 
-    Surface *_bg, *_rank, *_flagBorder;
+	Surface *_bg, *_rank, *_flagBorder;
 	InteractiveSurface *_flag;
 	TextButton *_btnOk, *_btnPrev, *_btnNext, *_btnArmor, *_btnSack, *_btnDiary;
 	Text *_txtRank, *_txtMissions, *_txtKills, *_txtCraft, *_txtRecovery, *_txtPsionic, *_txtDead;
 	TextEdit *_edtSoldier;
 
-    int _flagIndex;
+	int _flagIndex;
 
 	Text *_txtTimeUnits, *_txtStamina, *_txtHealth, *_txtBravery, *_txtReactions, *_txtFiring, *_txtThrowing, *_txtMelee, *_txtStrength, *_txtPsiStrength, *_txtPsiSkill;
 	Text *_numTimeUnits, *_numStamina, *_numHealth, *_numBravery, *_numReactions, *_numFiring, *_numThrowing, *_numMelee, *_numStrength, *_numPsiStrength, *_numPsiSkill;
 	Bar *_barTimeUnits, *_barStamina, *_barHealth, *_barBravery, *_barReactions, *_barFiring, *_barThrowing, *_barMelee, *_barStrength, *_barPsiStrength, *_barPsiSkill;
 
-    /// Updates the flag.
-    void initFlag();
+	/// Updates the flag.
+	void initFlag();
 
 public:
 	/// Creates the Soldier Info state.

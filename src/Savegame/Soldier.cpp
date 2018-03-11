@@ -70,7 +70,7 @@ Soldier::Soldier(RuleSoldier *rules, Armor *armor, int id) :
 		if (!names.empty())
 		{
 			int nationIndex = RNG::generate(0, names.size() - 1);
-            _nationality = names.at(nationIndex)->getNation();
+			_nationality = names.at(nationIndex)->getNation();
 			_name = names.at(nationIndex)->genName(&_gender, rules->getFemaleFrequency());
 			_look = (SoldierLook)names.at(nationIndex)->genLook(4); // Once we add the ability to mod in extra looks, this will need to reference the ruleset for the maximum amount of looks.
 		}

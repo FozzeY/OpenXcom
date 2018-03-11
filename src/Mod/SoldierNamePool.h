@@ -36,7 +36,7 @@ private:
 	std::vector<std::wstring> _maleFirst, _femaleFirst, _maleLast, _femaleLast;
 	std::vector<int> _lookWeights;
 	int _totalWeight, _femaleFrequency;
-    std::string _nation;
+	std::string _nation;
 public:
 	/// Creates a blank pool.
 	SoldierNamePool();
@@ -48,8 +48,8 @@ public:
 	std::wstring genName(SoldierGender *gender, int femaleFrequency) const;
 	/// Generates an int representing the index of the soldier's look, when passed the maximum index value.
 	size_t genLook(size_t numLooks);
-    /// Returns the pool's nation string.
-    std::string getNation() const;
+	/// Returns the pool's nation string.
+	std::string getNation() const;
 };
 
 }

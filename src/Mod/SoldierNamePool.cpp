@@ -45,8 +45,8 @@ SoldierNamePool::~SoldierNamePool()
  */
 void SoldierNamePool::load(const std::string &filename)
 {
-    int filenameOffset = filename.rfind('/') + 1;
-    _nation = filename.substr(filenameOffset, filename.rfind('.') - filenameOffset);
+	int filenameOffset = filename.rfind('/') + 1;
+	_nation = filename.substr(filenameOffset, filename.rfind('.') - filenameOffset);
 	YAML::Node doc = YAML::LoadFile(filename);
 
 	for (YAML::const_iterator i = doc["maleFirst"].begin(); i != doc["maleFirst"].end(); ++i)
@@ -167,7 +167,7 @@ size_t SoldierNamePool::genLook(size_t numLooks)
 
 std::string SoldierNamePool::getNation() const
 {
-    return _nation;
+	return _nation;
 }
 
 }

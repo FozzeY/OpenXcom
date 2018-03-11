@@ -78,7 +78,7 @@ SoldierInfoState::SoldierInfoState(Base *base, size_t soldierId) : _base(base), 
 	_bg = new Surface(320, 200, 0, 0);
 	_rank = new Surface(26, 23, 4, 4);
 	_flag = new InteractiveSurface(46, 23, 270, 4);
-    _flagBorder = new Surface(3, 27, 266, 2);
+	_flagBorder = new Surface(3, 27, 266, 2);
 	_btnPrev = new TextButton(28, 14, 0, 33);
 	_btnOk = new TextButton(48, 14, 30, 33);
 	_btnNext = new TextButton(28, 14, 80, 33);
@@ -157,7 +157,7 @@ SoldierInfoState::SoldierInfoState(Base *base, size_t soldierId) : _base(base), 
 	add(_bg);
 	add(_rank);
 	add(_flag);
-    add(_flagBorder);
+	add(_flagBorder);
 	add(_btnOk, "button", "soldierInfo");
 	add(_btnPrev, "button", "soldierInfo");
 	add(_btnNext, "button", "soldierInfo");
@@ -330,17 +330,17 @@ SoldierInfoState::~SoldierInfoState()
  */
 void SoldierInfoState::initFlag()
 {
-    Surface *flagTexture = _game->getMod()->getSurface(_soldier->getNationality(), false);
-    _flag->clear();
-    if(flagTexture != 0)
-    {
-        int leftX = _flag->getWidth() - flagTexture->getWidth();
-        flagTexture->setX(leftX); //align right
-        flagTexture->blit(_flag);
-        _flagBorder->setX(266 + leftX);
-        _flagBorder->clear(71);
-        _flagBorder->drawRect(1, 0, 1, 27, 66);
-    }
+	Surface *flagTexture = _game->getMod()->getSurface(_soldier->getNationality(), false);
+	_flag->clear();
+	if(flagTexture != 0)
+	{
+		int leftX = _flag->getWidth() - flagTexture->getWidth();
+		flagTexture->setX(leftX); //align right
+		flagTexture->blit(_flag);
+		_flagBorder->setX(266 + leftX);
+		_flagBorder->clear(71);
+		_flagBorder->drawRect(1, 0, 1, 27, 66);
+	}
 }
 
 /**
@@ -374,7 +374,7 @@ void SoldierInfoState::init()
 	texture->getFrame(_soldier->getRankSprite())->blit(_rank);
 
 	_flagIndex = 0;
-    initFlag();
+	initFlag();
 
 	std::wostringstream ss;
 	ss << withArmor.tu;
@@ -661,7 +661,7 @@ void SoldierInfoState::btnFlagClick(Action *action)
 	}
 	else if (action->getDetails()->button.button == SDL_BUTTON_RIGHT)
 	{
-        _flagIndex += -1;
+		_flagIndex += -1;
 	}
 
 	const std::vector<SoldierNamePool*> &names = _soldier->getRules()->getNames();
@@ -670,20 +670,20 @@ void SoldierInfoState::btnFlagClick(Action *action)
 		const int max = names.size();
 		if (_flagIndex > max - 1)
 		{
-            _flagIndex = 0;
+			_flagIndex = 0;
 		}
 		else if (_flagIndex < 0)
 		{
-            _flagIndex = max - 1;
+			_flagIndex = max - 1;
 		}
 	}
 	else
 	{
-        _flagIndex = 0;
+		_flagIndex = 0;
 	}
 
 	_soldier->setNationality(names.at(_flagIndex)->getNation());
-    initFlag();
+	initFlag();
 }
 
 }
