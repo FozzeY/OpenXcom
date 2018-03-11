@@ -49,8 +49,8 @@ class Soldier
 {
 private:
 	std::wstring _name;
-	int _id, _nationality, _improvement, _psiStrImprovement;
-    std::string _nationString;
+	int _id, _improvement, _psiStrImprovement;
+    std::string _nationality;
 	RuleSoldier *_rules;
 	UnitStats _initialStats, _currentStats;
 	SoldierRank _rank;
@@ -82,13 +82,9 @@ public:
 	/// Sets the soldier's name.
 	void setName(const std::wstring &name);
 	/// Gets the soldier's nationality.
-	int getNationality() const;
+	std::string getNationality() const;
 	/// Sets the soldier's nationality.
-	void setNationality(int nationality);
-    /// Gets the soldier's national flag string.
-    std::string getNationString() const;
-    /// Sets the soldier's national flag string.
-    void setNationString(const std::string &nationString);
+	void setNationality(const std::string &nationality);
 	/// Gets the soldier's craft.
 	Craft *getCraft() const;
 	/// Sets the soldier's craft.

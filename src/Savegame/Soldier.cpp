@@ -41,7 +41,7 @@ namespace OpenXcom
  * @param id Unique soldier id for soldier generation.
  */
 Soldier::Soldier(RuleSoldier *rules, Armor *armor, int id) :
-	_id(id), _nationality(0), _nationString(""),
+	_id(id), _nationality(""),
 	_improvement(0), _psiStrImprovement(0), _rules(rules), _rank(RANK_ROOKIE), _craft(0),
 	_gender(GENDER_MALE), _look(LOOK_BLONDE), _lookVariant(0), _missions(0), _kills(0), _recovery(0.0f),
 	_recentlyPromoted(false), _psiTraining(false), _training(false),
@@ -69,10 +69,10 @@ Soldier::Soldier(RuleSoldier *rules, Armor *armor, int id) :
 		const std::vector<SoldierNamePool*> &names = rules->getNames();
 		if (!names.empty())
 		{
-			_nationality = RNG::generate(0, names.size() - 1);
-            _nationString = names.at(_nationality)->getNation();
-			_name = names.at(_nationality)->genName(&_gender, rules->getFemaleFrequency());
-			_look = (SoldierLook)names.at(_nationality)->genLook(4); // Once we add the ability to mod in extra looks, this will need to reference the ruleset for the maximum amount of looks.
+			int nationIndex = RNG::generate(0, names.size() - 1);
+            _nationality = names.at(nationIndex)->getNation();
+			_name = names.at(nationIndex)->genName(&_gender, rules->getFemaleFrequency());
+			_look = (SoldierLook)names.at(nationIndex)->genLook(4); // Once we add the ability to mod in extra looks, this will need to reference the ruleset for the maximum amount of looks.
 		}
 		else
 		{
@@ -109,8 +109,7 @@ void Soldier::load(const YAML::Node& node, const Mod *mod, SavedGame *save)
 {
 	_id = node["id"].as<int>(_id);
 	_name = Language::utf8ToWstr(node["name"].as<std::string>());
-	_nationality = node["nationality"].as<int>(_nationality);
-    _nationString = node["nationString"].as<std::string>();
+	_nationality = node["nationality"].as<std::string>();
 	_initialStats = node["initialStats"].as<UnitStats>(_initialStats);
 	_currentStats = node["currentStats"].as<UnitStats>(_currentStats);
 	_rank = (SoldierRank)node["rank"].as<int>();
@@ -173,7 +172,6 @@ YAML::Node Soldier::save() const
 	node["id"] = _id;
 	node["name"] = Language::wstrToUtf8(_name);
 	node["nationality"] = _nationality;
-    node["nationString"] = _nationString;
 	node["initialStats"] = _initialStats;
 	node["currentStats"] = _currentStats;
 	node["rank"] = (int)_rank;
@@ -254,7 +252,7 @@ void Soldier::setName(const std::wstring &name)
 * Returns the soldier's nationality.
 * @return Nationality ID.
 */
-int Soldier::getNationality() const
+std::string Soldier::getNationality() const
 {
 	return _nationality;
 }
@@ -263,27 +261,9 @@ int Soldier::getNationality() const
 * Changes the soldier's nationality.
 * @param nationality Nationality ID.
 */
-void Soldier::setNationality(int nationality)
+void Soldier::setNationality(const std::string &nationality)
 {
 	_nationality = nationality;
-}
-
-/**
-* Returns the soldier's nation string.
-* @return Nation string for the corresponding flag.
-*/
-std::string Soldier::getNationString() const
-{
-    return _nationString;
-}
-
-/**
-* Changes the soldier's nation string.
-* @param nationString Nation string for the corresponding flag.
-*/
-void Soldier::setNationString(const std::string &nationString)
-{
-    _nationString = nationString;
 }
 
 /**

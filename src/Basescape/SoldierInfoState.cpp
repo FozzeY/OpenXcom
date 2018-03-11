@@ -326,6 +326,24 @@ SoldierInfoState::~SoldierInfoState()
 }
 
 /**
+ * Updates the soldier flag.
+ */
+void SoldierInfoState::initFlag()
+{
+    Surface *flagTexture = _game->getMod()->getSurface(_soldier->getNationality(), false);
+    _flag->clear();
+    if(flagTexture != 0)
+    {
+        int leftX = _flag->getWidth() - flagTexture->getWidth();
+        flagTexture->setX(leftX); //align right
+        flagTexture->blit(_flag);
+        _flagBorder->setX(266 + leftX);
+        _flagBorder->clear(71);
+        _flagBorder->drawRect(1, 0, 1, 27, 66);
+    }
+}
+
+/**
  * Updates soldier stats when
  * the soldier changes.
  */
@@ -355,17 +373,8 @@ void SoldierInfoState::init()
 	texture->getFrame(_soldier->getRankSprite())->setY(0);
 	texture->getFrame(_soldier->getRankSprite())->blit(_rank);
 
-    Surface *flagTexture = _game->getMod()->getSurface(_soldier->getNationString());
-	_flag->clear();
-	if (flagTexture != 0)
-	{
-        int leftX = _flag->getWidth() - flagTexture->getWidth();
-        flagTexture->setX(leftX); //align right
-		flagTexture->blit(_flag);
-        _flagBorder->setX(266 + leftX);
-        _flagBorder->clear(71);
-        _flagBorder->drawRect(1, 0, 1, 27, 66);
-	}
+	_flagIndex = 0;
+    initFlag();
 
 	std::wostringstream ss;
 	ss << withArmor.tu;
@@ -645,37 +654,36 @@ void SoldierInfoState::btnDiaryClick(Action *)
 */
 void SoldierInfoState::btnFlagClick(Action *action)
 {
-	int temp = _soldier->getNationality();
+
 	if (action->getDetails()->button.button == SDL_BUTTON_LEFT)
 	{
-		temp += 1;
+		_flagIndex += 1;
 	}
 	else if (action->getDetails()->button.button == SDL_BUTTON_RIGHT)
 	{
-		temp += -1;
+        _flagIndex += -1;
 	}
 
 	const std::vector<SoldierNamePool*> &names = _soldier->getRules()->getNames();
 	if (!names.empty())
 	{
 		const int max = names.size();
-		if (temp > max - 1)
+		if (_flagIndex > max - 1)
 		{
-			temp = 0;
+            _flagIndex = 0;
 		}
-		else if (temp < 0)
+		else if (_flagIndex < 0)
 		{
-			temp = max - 1;
+            _flagIndex = max - 1;
 		}
 	}
 	else
 	{
-		temp = 0;
+        _flagIndex = 0;
 	}
 
-	_soldier->setNationality(temp);
-    _soldier->setNationString(names.at(temp)->getNation());
-	init();
+	_soldier->setNationality(names.at(_flagIndex)->getNation());
+    initFlag();
 }
 
 }
